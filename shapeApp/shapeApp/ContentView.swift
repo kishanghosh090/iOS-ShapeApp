@@ -61,10 +61,122 @@ struct ContentView: View {
     @State public var counter = 0
     @State private var showingAlert: choice?
     var body: some View{
-        Text("Hello from chai code")
-            .padding()
+        ZStack{
+            Image("sunshine")
+                .resizable()
+                .ignoresSafeArea()
+            VStack(alignment: .center, spacing: 80){
+                HStack{
+                    Image("fire")
+                        .resizable()
+                        .scaledToFit()
+                        .shadow(color: .orange, radius: 1, y: 3)
+                    Text("Slot mechine")
+                        .font(.system(size: 30))
+                        .fontWeight(.bold)
+                        .shadow(radius: 1, y: 3)
+                    Image("fire")
+                        .resizable()
+                        .scaledToFit()
+                        .shadow(color: .orange, radius: 1, y: 3)
+                    
+                }.frame(width: .infinity, height: 50, alignment: .center)
+                
+                VStack(spacing: 15){
+                    HStack(spacing: 25){
+                        Hexagonal()
+                            .fill(Color.white.opacity(0.5))
+                            .frame(width: 100,height: 120, alignment: .center)
+                            .overlay(
+                                Image(symbols[numbers[0]])
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 80, height: 70, alignment: .center)
+                                    .shadow(color: .gray, radius: 4, x: 4, y: 5)
+                            )
+                        Hexagonal()
+                            .fill(Color.white.opacity(0.5))
+                            .frame(width: 100,height: 120, alignment: .center)
+                            .overlay(
+                                Image(symbols[numbers[1]])
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 80, height: 70, alignment: .center)
+                                    .shadow(color: .gray, radius: 4, x: 4, y: 5)
+                            )
+                    }
+                    Hexagonal()
+                        .fill(Color.white.opacity(0.5))
+                        .frame(width: 100,height: 120, alignment: .center)
+                        .overlay(
+                            Image(symbols[numbers[2]])
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 80, height: 70, alignment: .center)
+                                .shadow(color: .gray, radius: 4, x: 4, y: 5)
+                        )
+                    HStack(spacing: 25){
+                        Hexagonal()
+                            .fill(Color.white.opacity(0.5))
+                            .frame(width: 100,height: 120, alignment: .center)
+                            .overlay(
+                                Image(symbols[numbers[0]])
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 80, height: 70, alignment: .center)
+                                    .shadow(color: .gray, radius: 4, x: 4, y: 5)
+                            )
+                        Hexagonal()
+                            .fill(Color.white.opacity(0.5))
+                            .frame(width: 100,height: 120, alignment: .center)
+                            .overlay(
+                                Image(symbols[numbers[1]])
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(width: 80, height: 70, alignment: .center)
+                                    .shadow(color: .gray, radius: 4, x: 4, y: 5)
+                            )
+                    }
+                    Button {
+                        self.numbers[0] = Int.random(in: 0...self.symbols.count - 1)
+                        self.numbers[1] = Int.random(in: 0...self.symbols.count - 1)
+                        self.numbers[2] = Int.random(in: 0...self.symbols.count - 1)
+                        counter+=1
+                        if counter > 5 {
+                            self.showingAlert = .failure
+                            counter = 0
+                            return
+                        }
+                        self.showingAlert = .success
+                    } label: {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(Color("color").opacity(0.9))
+                            .frame(width: 150, height: 50)
+                            .overlay(
+                                Text("spin")
+                                    .foregroundStyle(Color.white)
+                                    .fontWeight(.black)
+                            )
+                            .foregroundStyle(.black)
+                            .shadow(color: .gray, radius: 1, y: 4)
+                            
+                    }
+
+                }
+            }
+            
+        }.alert(item: $showingAlert) { aleart -> Alert in
+            switch aleart {
+            case .success :
+                return Alert(title: Text("Yahh! you woon"), message: Text("Bron with the charm"), dismissButton: .cancel())
+            case .failure :
+                return Alert(title: Text("oops! you do't woon"), message: Text("better luck next time"), dismissButton: .cancel())
+            }
+            
+        }
     }
 }
+
 
 #Preview {
     ContentView()
